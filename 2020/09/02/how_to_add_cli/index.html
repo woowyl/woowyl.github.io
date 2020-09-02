@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>如何在命令行添加一条命令 | 远亮的博客</title>
+    <meta name="author" content="John Doe" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="在使用node的时候，经常会好奇，为什么在命令行输入了一个npm install这样的命令，会自动执行那么多操作? 电脑是如何识别npm的? 为什么可以识别npm却不能识别ilovewyl呢(其实注册了这个命令之后是可以执行的)？如果想要让命令行知道你的命令，你需要完成两步操作通过安装将这个命令注册在bin文件夹内确保这个bin文件夹路径在/etc/paths中（可以通过echo $PATH查看当前路径）  第一步其实在安装软件的时候会自动完成，但是我们需要对bin目录有一个更加..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">远亮的博客</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/language">
+                <span class="nav-text">通识</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://wangyuanliang.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-用户可执行文件"><span class="toc-number">1.</span> <span class="toc-text">1. 用户可执行文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bin"><span class="toc-number">1.1.</span> <span class="toc-text">&#x2F;bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usr-bin"><span class="toc-number">1.2.</span> <span class="toc-text">&#x2F;usr&#x2F;bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usr-local-bin"><span class="toc-number">1.3.</span> <span class="toc-text">&#x2F;usr&#x2F;local&#x2F;bin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统可执行文件"><span class="toc-number">2.</span> <span class="toc-text">系统可执行文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sbin"><span class="toc-number">2.1.</span> <span class="toc-text">&#x2F;sbin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usr-sbin"><span class="toc-number">2.2.</span> <span class="toc-text">&#x2F;usr&#x2F;sbin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单归纳："><span class="toc-number">3.</span> <span class="toc-text">简单归纳：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他重要的目录"><span class="toc-number">4.</span> <span class="toc-text">其他重要的目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            如何在命令行添加一条命令
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://wangyuanliang.com/2020/09/02/how_to_add_cli/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-09-02T09:31:46.000Z" itemprop="datePublished">2020-09-02</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/" rel="tag">计算机通识</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>在使用node的时候，经常会好奇，为什么在命令行输入了一个<code>npm install</code>这样的命令，会自动执行那么多操作? 电脑是如何识别<code>npm</code>的? 为什么可以识别<code>npm</code>却不能识别<code>ilovewyl</code>呢(其实注册了这个命令之后是可以执行的)？</p>
+<p>如果想要让命令行知道你的命令，你需要完成两步操作</p>
+<ol>
+<li>通过安装将这个命令注册在bin文件夹内</li>
+<li>确保这个bin文件夹路径在/etc/paths中（可以通过<code>echo $PATH</code>查看当前路径）  <a id="more"></a>
+第一步其实在安装软件的时候会自动完成，但是我们需要对<code>bin</code>目录有一个更加理性的认识，这样在出现一些问题的时候，我们才不会不知道如何下手。下面就对<code>bin</code>目录做一个简单的介绍。</li>
+</ol>
+<p><code>Bin</code>目录是众多<code>Linux</code>目录中的一个（文末有其他重要的目录），是存放可执行文件的目录，可分为用户可执行文件和系统可执行文件.</p>
+<h2 id="1-用户可执行文件"><a href="#1-用户可执行文件" class="headerlink" title="1. 用户可执行文件"></a>1. 用户可执行文件</h2><p>包括 <code>/bin</code> 、<code>/usr/bin</code>、 <code>/usr/local/bin</code><br><code>/usr/bin</code>下面的都是系统预装的可执行程序，会随着系统升级而改变。<br><code>/usr/local/bin</code>目录是用户放置自己的可执行程序的地方，不会被系统升级而覆盖同名文件。</p>
+<h3 id="bin"><a href="#bin" class="headerlink" title="/bin"></a>/bin</h3><p><code>bin</code>为binary的简写，主要放置一些系统的必备执行档， <code>/bin</code>是系统的一些指令。比如</p>
+<ul>
+<li>cat </li>
+<li>cp</li>
+<li>dd </li>
+<li>launchctl</li>
+<li>test</li>
+<li>df</li>
+<li>pwd </li>
+<li>link </li>
+<li>unlink</li>
+<li>rm </li>
+<li>echo</li>
+<li>ln </li>
+<li>rmdir</li>
+<li>mkdir</li>
+<li>mv</li>
+<li>wait4path</li>
+<li>chmod</li>
+<li>ed</li>
+<li>ls</li>
+<li>expr </li>
+<li>sleep</li>
+<li>hostname</li>
+<li>stty</li>
+<li>kill</li>
+<li>ps</li>
+<li>sync</li>
+<li>pax</li>
+<li>data</li>
+<li>shell相关<ul>
+<li>bash</li>
+<li>sh</li>
+<li>zsh</li>
+<li>csh</li>
+<li>dash</li>
+<li>ksh</li>
+<li>tchs</li>
+</ul>
+</li>
+</ul>
+<h3 id="usr-bin"><a href="#usr-bin" class="headerlink" title="/usr/bin"></a>/usr/bin</h3><p>是你在后期安装的一些软件的运行脚本。主要放置一些应用软体工具的必备执行档，<code>usr</code> 指 <code>Unix System Resource</code>，而不是<code>User</code>，比如列举一下我们常见的</p>
+<ul>
+<li>git </li>
+<li>sudo</li>
+<li>vim</li>
+<li>zip</li>
+<li>ssh</li>
+<li>c++</li>
+<li>php</li>
+<li>python</li>
+<li>pip</li>
+<li>…</li>
+</ul>
+<h3 id="usr-local-bin"><a href="#usr-local-bin" class="headerlink" title="/usr/local/bin"></a>/usr/local/bin</h3><p><code>/usr/local/bin</code> 用于普通用户可以运行的程序，<code>/usr/local</code>层次结构供系统管理员在本地安装软件时使用,不会被系统升级而覆盖同名文件。本地安装的软件必须放在<code>/usr/local</code>而不是<code>/usr</code>中，除非要安装它来替换或升级/usr中的软件。比如</p>
+<ul>
+<li>node</li>
+<li>npm</li>
+<li>pyhton3.8 ..</li>
+</ul>
+<h2 id="系统可执行文件"><a href="#系统可执行文件" class="headerlink" title="系统可执行文件"></a>系统可执行文件</h2><p>系统可执行文件：/sbin、/usr/sbin</p>
+<h3 id="sbin"><a href="#sbin" class="headerlink" title="/sbin"></a>/sbin</h3><p> <code>/sbin</code>一般是指超级用户指令。（system binary）主要放置一些系统管理的必备程式例如</p>
+<ul>
+<li>cfdisk</li>
+<li>dump</li>
+<li>shutdown</li>
+<li>ifconfig</li>
+<li>ping</li>
+<li>reboot</li>
+<li>md5</li>
+<li>…<h3 id="usr-sbin"><a href="#usr-sbin" class="headerlink" title="/usr/sbin"></a>/usr/sbin</h3><code>/usr/sbin</code>   放置一些用户安装的系统管理的必备程式<ul>
+<li>dhcpd</li>
+<li>httpd</li>
+<li>imap</li>
+<li>samba</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h2 id="简单归纳："><a href="#简单归纳：" class="headerlink" title="简单归纳："></a>简单归纳：</h2><p>/bin目录（binary）是二进制执行文件目录，主要用于具体应用<br>/sbin目录（system binary）是系统管理员专用的二进制代码存放目录，主要用于系统管理</p>
+<h2 id="其他重要的目录"><a href="#其他重要的目录" class="headerlink" title="其他重要的目录"></a>其他重要的目录</h2><ul>
+<li>主目录：/root、/home/username</li>
+<li>用户可执行文件：/bin、/usr/bin、/usr/local/bin</li>
+<li>系统可执行文件：/sbin、/usr/sbin、/usr/local/sbin</li>
+<li>其他挂载点：/media、/mnt</li>
+<li>配置：/etc<ul>
+<li>paths就保存在这里通过 <code>echo $PATH</code>命令可以看到path配置</li>
+</ul>
+</li>
+<li>临时文件：/tmp</li>
+<li>内核和Bootloader：/boot</li>
+<li>服务器数据：/var、/srv</li>
+<li>系统信息：/proc、/sys</li>
+<li>共享库：/lib、/usr/lib、/usr/local/lib</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.51cto.com/14551658/2440488" target="_blank" rel="noopener">Linux 基础知识 /bin,/sbin,/usr/sbin,/usr/bin 目录 区别详解</a></p>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/09/01/bash-zsh-shell/" class="article-next" title="shell 以及他的命令行环境"><i class="icon-arrow-right"></i></a>
+
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "0da1f66fc44b769a7531",
+        clientSecret: "567ec8a984c0f8fdcfd505b556e0ef16d99eab19",
+        repo: "woowyl.github.io",
+        owner: "woowyl",
+        admin: ["woowyl"],
+        id: "2020/09/02/how_to_add_cli",
+        distractionFreeMode: true,
+        title: "如何在命令行添加一条命令",
+        body: "http://wangyuanliang.com/2020/09/02/how_to_add_cli/",
+        labels: ["计算机通识"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?948c1e123cc90fe559dca9cb0d07bbab";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+</html>

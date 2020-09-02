@@ -1,0 +1,14 @@
+.archives {
+  padding-left: 1.75em;
+  margin-top: 1.2rem;
+}
+.archives .archive-article-link {
+  color: #4a4a4a;
+}
+.archives .archive-article-link:hover {
+  color: #7cc04b;
+}
+.archives .archive-article-date {
+  color: #999;
+  margin-left: 8px;
+}
