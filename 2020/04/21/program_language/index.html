@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>计算机通用语言 | 远亮的博客</title>
+    <meta name="author" content="John Doe" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="如何让计算机理解代码从最基本的角度看，一种编程语言就是：把一组特定的词汇，按照一组特定的语法规则组合到一起，形成计算机可以通过某种方式“理解”的东西，可以让计算机据此执行特定的动作。这不是一个很容易解释的话题。相比人类，计算机是一个没有感情的机器。没有感情有好也有坏。好处就是你定义好规则，它就会按照你的规则办事。如何制定这个规则，也就是如何设计一门语言。人类有English，中文，日本人，Espanol，عربي， 한국어…。每个语言都有自己的表达规则，计算机语言也不例外。那么如何从..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">远亮的博客</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/language">
+                <span class="nav-text">通识</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://wangyuanliang.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何让计算机理解代码"><span class="toc-number">1.</span> <span class="toc-text">如何让计算机理解代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何设计一套计算机语言"><span class="toc-number">2.</span> <span class="toc-text">如何设计一套计算机语言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法部分"><span class="toc-number">2.1.</span> <span class="toc-text">语法部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#非形式语法"><span class="toc-number">2.1.1.</span> <span class="toc-text">非形式语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#形式语法（乔姆斯基谱系）"><span class="toc-number">2.1.2.</span> <span class="toc-text">形式语法（乔姆斯基谱系）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产生式-巴科斯诺尔范式-Backus-Normal-Form-——-BNF"><span class="toc-number">2.2.</span> <span class="toc-text">产生式 巴科斯诺尔范式 (Backus Normal Form —— BNF)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见的语言分析"><span class="toc-number">2.3.</span> <span class="toc-text">常见的语言分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JavaScript"><span class="toc-number">2.3.1.</span> <span class="toc-text">JavaScript</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C"><span class="toc-number">2.3.2.</span> <span class="toc-text">C++</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VB"><span class="toc-number">2.3.3.</span> <span class="toc-text">VB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python"><span class="toc-number">2.4.</span> <span class="toc-text">Python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他语言"><span class="toc-number">2.5.</span> <span class="toc-text">其他语言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">3.</span> <span class="toc-text">reference</span></a></li></ol>
+        
+    </div>
+    
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            计算机通用语言
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://wangyuanliang.com/2020/04/21/program_language/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-04-21T02:46:09.000Z" itemprop="datePublished">2020-04-21</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/" rel="tag">计算机通识</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="如何让计算机理解代码"><a href="#如何让计算机理解代码" class="headerlink" title="如何让计算机理解代码"></a>如何让计算机理解代码</h2><blockquote>
+<p>从最基本的角度看，一种编程语言就是：把一组特定的<strong>词汇</strong>，按照一组特定的<strong>语法</strong>规则组合到一起，形成计算机可以通过某种方式“<strong>理解</strong>”的东西，可以让计算机据此执行特定的<strong>动作</strong>。</p>
+</blockquote>
+<p>这不是一个很容易解释的话题。相比人类，计算机是一个没有感情的机器。没有感情有好也有坏。好处就是你定义好规则，它就会按照你的规则办事。如何制定这个规则，也就是如何设计一门语言。人类有English，中文，日本人，Espanol，عربي， 한국어…。每个语言都有自己的表达规则，计算机语言也不例外。那么如何从无到有设计一套语言呢？在开始设计之前，我们先来理解几个基础词汇。</p>
+<ul>
+<li>文法 （Grammar）</li>
+<li>语法  (Syntax)</li>
+<li>词法 （Lexical）<a id="more"></a>
+以人工英汉翻译为例<br><img src="translate.png" alt=""></li>
+</ul>
+<p>首先是解析的过程： </p>
+<p>当拿到一个句子，我们首先理解了每一个词（词组）的意思（词法分析），然后理解词组组合后的短语（语法分析）。最后将短语组合翻译，变成一个句子的语义（语义分析）。这个语义是中间表示，独立于具体的语言。拿到语义之后你就可以生成目标语言。人类翻译的目标语言可以是“中文”，“韩文”，“法文”等等。具体是哪个形式，由接受人决定，你翻译给谁听，就译成ta理解的形式。而对计算机而言，目标语言就是机器语言。</p>
+<p><img src="machine_language.png" alt=""></p>
+<p>知道了这个过程之后，我们就可以继续思考一下，如何取制定一套语言的文法规则。</p>
+<h2 id="如何设计一套计算机语言"><a href="#如何设计一套计算机语言" class="headerlink" title="如何设计一套计算机语言"></a>如何设计一套计算机语言</h2><p>根据我们上面的分析，要想让计算机“读”懂我们的代码，就要有一套固定的语义，语法和词法体系。那么现在我们常用的语言是按照什么规则制定的呢？</p>
+<h3 id="语法部分"><a href="#语法部分" class="headerlink" title="语法部分"></a>语法部分</h3><h4 id="非形式语法"><a href="#非形式语法" class="headerlink" title="非形式语法"></a>非形式语法</h4><ul>
+<li>中文 英文</li>
+</ul>
+<h4 id="形式语法（乔姆斯基谱系）"><a href="#形式语法（乔姆斯基谱系）" class="headerlink" title="形式语法（乔姆斯基谱系）"></a>形式语法（乔姆斯基谱系）</h4><ul>
+<li>O型  无限制文法<ul>
+<li><code>?::=?</code></li>
+</ul>
+</li>
+<li>1型  上下文相关文法<ul>
+<li><code>?&lt;A&gt;?::=?&lt;B&gt;</code></li>
+</ul>
+</li>
+<li>2型  上下文无关文法<ul>
+<li><code>&lt;A&gt;::=?</code></li>
+</ul>
+</li>
+<li>3型  正则文法<ul>
+<li><code>&lt;A&gt;::=&lt;A&gt;？</code></li>
+</ul>
+</li>
+</ul>
+<p>其中 <strong>上下文无关语言</strong>为大多数<strong>程序设计语言</strong>的语法提供了理论基础。</p>
+<p>在这个理论基础上，有了一些具体的实践。 以BNF为例，BNF是比较常见的一种形式。</p>
+<h3 id="产生式-巴科斯诺尔范式-Backus-Normal-Form-——-BNF"><a href="#产生式-巴科斯诺尔范式-Backus-Normal-Form-——-BNF" class="headerlink" title="产生式 巴科斯诺尔范式 (Backus Normal Form —— BNF)"></a>产生式 巴科斯诺尔范式 (Backus Normal Form —— BNF)</h3><ul>
+<li>用尖括号括起来的名称来表示语法结构名</li>
+<li>语法结构分成基础结构和需要用其他语法结构定义的复合结构<ul>
+<li>基础结构称终结符</li>
+<li>复合结构称非终结符</li>
+</ul>
+</li>
+<li>引号和中间的字符表示终结符</li>
+<li>可以有括号</li>
+<li><code>*</code> 表示重复多次</li>
+<li><code>|</code> 表示或</li>
+<li><code>+</code> 表示至少一次</li>
+</ul>
+<p>一个四则运算的BNF凡是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;Number&gt; ::= <span class="string">"0"</span> | <span class="string">"1"</span> | <span class="string">"2"</span> | <span class="string">"3"</span> | <span class="string">"4"</span> | ... | <span class="string">"9"</span></span><br><span class="line"></span><br><span class="line">&lt;DecimalNumber&gt; ::= <span class="string">"0"</span> | ((<span class="string">"1"</span> | <span class="string">"2"</span> | <span class="string">"3"</span> | <span class="string">"4"</span> | ... | <span class="string">"9"</span>)&lt;Number&gt;*)</span><br><span class="line"></span><br><span class="line">&lt;PrimaryExpression&gt; ::= &lt;DecimalNumber&gt; | <span class="string">"("</span> &lt;LogicalExpression&gt; <span class="string">")"</span></span><br><span class="line"></span><br><span class="line">&lt;Multiplicative&gt; ::= &lt;PrimaryExpression&gt; |</span><br><span class="line">                   &lt;Multiplicative&gt; <span class="string">"*"</span> &lt;PrimaryExpression&gt; |</span><br><span class="line">                   &lt;Multiplicative&gt; <span class="string">"/"</span> &lt;PrimaryExpression&gt;</span><br><span class="line"></span><br><span class="line">&lt;AddtiveExpression&gt; ::= &lt;Multiplicative&gt; |</span><br><span class="line">                      &lt;AddtiveExpression&gt; <span class="string">"+"</span> &lt;Multiplicative&gt; |</span><br><span class="line">                      &lt;AddtiveExpression&gt; <span class="string">"-"</span> &lt;Multiplicative&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;logicalExpression&gt; ::= &lt;AddtiveExpression&gt; |</span><br><span class="line">                      &lt;logicalExpression&gt; <span class="string">"||"</span> &lt;AddtiveExpression&gt; |</span><br><span class="line">                      &lt;logicalExpression&gt; <span class="string">"&amp;&amp;"</span> &lt;AddtiveExpression&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常见的语言分析"><a href="#常见的语言分析" class="headerlink" title="常见的语言分析"></a>常见的语言分析</h3><h4 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h4><p>JavaScript语法多是上下文无关文法为主。但是也有特殊的情况，比如:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span> a &#123;<span class="keyword">return</span> <span class="number">1</span>&#125;,  <span class="comment">//在这里get是一个关键字</span></span><br><span class="line">    <span class="keyword">get</span>: 1             //而在这里就是一个变量名</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>表达式部分多在3型，正则文法。但也有特殊的情况，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>**<span class="number">1</span>**<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>Javascript中，<code>/</code>可能是除号，也可能是正则表达式开头，处理方式类似VB，字符串模板中也需要特殊处理，还有自动插入分号规则。</p>
+<h4 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h4><p>C++是非形式化语言，C++中，<code>*</code>坑你表示乘号或者指针，具体是哪个，取决于星号前面的标识符是否被声明为类型</p>
+<h4 id="VB"><a href="#VB" class="headerlink" title="VB"></a>VB</h4><p>VB基本上是1型。<code>&lt;</code>可能是小于号，也可能是XML直接量的开始，取决于当前位置是否可以接受XML直接量。</p>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>行首的Tab符和空格会根据上一行的行首空白以一定规则被处处理成虚拟终结符indent或者dedent</p>
+<h3 id="其他语言"><a href="#其他语言" class="headerlink" title="其他语言"></a>其他语言</h3><p>Lisp, C, PHP, JAVA, SQL</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p><a href="https://www.zhihu.com/question/19756886" target="_blank" rel="noopener">怎样设计一套程序设计语言？</a><br><a href="https://www.bilibili.com/video/BV1zW411t7YE?from=search&seid=1590568849937040326" target="_blank" rel="noopener">编译原理（哈工大）—— bilibili</a></p>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/04/21/charset/" class="article-next" title="计算机编码"><i class="icon-arrow-right"></i></a>
+
+
+<a id="pageprev" href="/2020/05/09/paper/paper-search/" class="article-prev" title="如何找论文文献"><i class="icon-arrow-left"></i></a>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "0da1f66fc44b769a7531",
+        clientSecret: "567ec8a984c0f8fdcfd505b556e0ef16d99eab19",
+        repo: "woowyl.github.io",
+        owner: "woowyl",
+        admin: ["woowyl"],
+        id: "2020/04/21/program_language",
+        distractionFreeMode: true,
+        title: "计算机通用语言",
+        body: "http://wangyuanliang.com/2020/04/21/program_language/",
+        labels: ["计算机通识"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?948c1e123cc90fe559dca9cb0d07bbab";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>写论文里的小工具（基础配置版） | 远亮的博客</title>
+    <meta name="author" content="John Doe" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="搜索  关于搜索我有专门的一篇文章，传送门如何找论文文献阅读推荐zotero在pad端我使用了PDF expert。papers使用的人也比较多。整理  世界上最悲哀的不是找不到相关论文，而是读完之后忘记了自己读了啥。为了不那么悲哀，需要采用一些论文的笔记工具。  图像化相关的首推 x-mind下载链接;有了它做图用官网的话简直就是——思如泉涌 • 成竹在图。而且这个软件兼容性很好，在pad上查看完全无障碍。在mac上做图，在pad上随时查阅，简直不要太方便。  在线简单一点的工具有..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">远亮的博客</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/language">
+                <span class="nav-text">通识</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://wangyuanliang.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-number">1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阅读"><span class="toc-number">2.</span> <span class="toc-text">阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整理"><span class="toc-number">3.</span> <span class="toc-text">整理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写论文"><span class="toc-number">4.</span> <span class="toc-text">写论文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#论文结构"><span class="toc-number">4.1.</span> <span class="toc-text">论文结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查重"><span class="toc-number">5.</span> <span class="toc-text">查重</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#不查重部分"><span class="toc-number">5.1.</span> <span class="toc-text">不查重部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查重平台"><span class="toc-number">5.2.</span> <span class="toc-text">查重平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何降重"><span class="toc-number">5.3.</span> <span class="toc-text">如何降重</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            写论文里的小工具（基础配置版）
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://wangyuanliang.com/2020/05/10/paper/paper-tool/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-05-10T05:13:56.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/paper/" rel="tag">paper</a>, <a class="article-tag-link" href="/tags/%E6%95%88%E7%8E%87/" rel="tag">效率</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>  关于搜索我有专门的一篇文章，传送门<a href="/2020/05/09/paper/paper-search/">如何找论文文献</a></p>
+<h2 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h2><p>推荐<a href="https://www.zotero.org/" target="_blank" rel="noopener">zotero</a><br>在pad端我使用了PDF expert。papers使用的人也比较多。</p>
+<h2 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h2><p>  世界上最悲哀的不是找不到相关论文，而是读完之后忘记了自己读了啥。为了不那么悲哀，需要采用一些论文的笔记工具。</p>
+<p>  图像化相关的首推 <code>x-mind</code><a href="https://www.xmind.cn/" target="_blank" rel="noopener">下载链接</a>;有了它做图用官网的话简直就是——思如泉涌 • 成竹在图。而且这个软件兼容性很好，在pad上查看完全无障碍。在mac上做图，在pad上随时查阅，简直不要太方便。<br>  在线简单一点的工具有<a href="https://www.processon.com/" target="_blank" rel="noopener">Process</a>。<br>  当然相似的脑图软件还有好多，其他的我还没有使用，暂时就不发表意见了。</p>
+<a id="more"></a>
+<p>  文字笔记的话，考虑到多端同步，我首推印象笔记。也是可以在手机、pad、电脑端即时同步的，不过要支持多端同步的话是要收费的。国内的有道云笔记好像也支持这个功能了。<br>  看到好多前辈推荐使用onenote做笔记，也是一个不错的工具，关键是免费啊！值得一试。</p>
+<h2 id="写论文"><a href="#写论文" class="headerlink" title="写论文"></a>写论文</h2><p>  由于我还没开始写，所以，暂时还没有太好的经验，后续再补充吧。</p>
+<h3 id="论文结构"><a href="#论文结构" class="headerlink" title="论文结构"></a>论文结构</h3><ul>
+<li><p>封面，原创性声明</p>
+</li>
+<li><p>中英文摘要</p>
+<ol>
+<li>简单介绍背景</li>
+<li>目前存在的问题</li>
+<li>你的具体工作，有几点就写几段</li>
+<li>简单总结<br>推荐语法检查网站（grammarly）</li>
+</ol>
+</li>
+<li><p>目录</p>
+</li>
+<li><p>绪论(综述)</p>
+<ol>
+<li>按时间顺序，阐述研究领域的研究现状</li>
+<li>对研究工作进行分类评述<ul>
+<li>经典文献详细说</li>
+<li>过时观点简单说</li>
+<li>争议焦点 罗列观点进行比较</li>
+</ul>
+</li>
+<li>总结现有工作的优势和不足</li>
+<li>提出发展前景和工作必要性</li>
+</ol>
+</li>
+<li><p>正文</p>
+<ol>
+<li>提出一个模型</li>
+<li>对模型展开分析</li>
+<li>实验</li>
+<li>实验结果 讨论及叙述</li>
+<li>总结</li>
+</ol>
+</li>
+<li><p>总结和展望</p>
+</li>
+<li><p>参考文献<br>使用endnote管理逼得参考文献，学习官网可下载</p>
+</li>
+<li><p>附录</p>
+</li>
+<li><p>致谢</p>
+</li>
+</ul>
+<h2 id="查重"><a href="#查重" class="headerlink" title="查重"></a>查重</h2><h3 id="不查重部分"><a href="#不查重部分" class="headerlink" title="不查重部分"></a>不查重部分</h3><ul>
+<li>封面</li>
+<li>原创性声明</li>
+<li>目录 致谢</li>
+<li>文中图片</li>
+<li>文中代码及数学公式</li>
+</ul>
+<h3 id="查重平台"><a href="#查重平台" class="headerlink" title="查重平台"></a>查重平台</h3><ul>
+<li><p>知网、万方、维普等</p>
+</li>
+<li><p>其他学校官方合作机构</p>
+</li>
+<li><p>paperpass 等第三方平台</p>
+<h3 id="如何降重"><a href="#如何降重" class="headerlink" title="如何降重"></a>如何降重</h3><ul>
+<li>善用国外资料 适当翻译国外文献中可用的内容</li>
+<li>连续字词之间插入新文字或同义词转换，句式转换</li>
+<li>文字改成图片 把一部分调查问卷等改成图片形式</li>
+<li>自己重新复述把原句全部删掉</li>
+</ul>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.bilibili.com/video/BV1L7411K7iH/?spm_id_from=trigger_reload" target="_blank" rel="noopener">bilibli在家如何写出优秀论文？？</a></p>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/05/09/paper/paper-search/" class="article-next" title="如何找论文文献"><i class="icon-arrow-right"></i></a>
+
+
+<a id="pageprev" href="/2020/09/01/bash-zsh-shell/" class="article-prev" title="shell 以及他的命令行环境"><i class="icon-arrow-left"></i></a>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "0da1f66fc44b769a7531",
+        clientSecret: "567ec8a984c0f8fdcfd505b556e0ef16d99eab19",
+        repo: "woowyl.github.io",
+        owner: "woowyl",
+        admin: ["woowyl"],
+        id: "2020/05/10/paper/paper-tool",
+        distractionFreeMode: true,
+        title: "写论文里的小工具（基础配置版）",
+        body: "http://wangyuanliang.com/2020/05/10/paper/paper-tool/",
+        labels: ["paper","效率"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?948c1e123cc90fe559dca9cb0d07bbab";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+</html>
