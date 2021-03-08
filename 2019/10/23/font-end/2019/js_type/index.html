@@ -10,7 +10,7 @@
     <title>0 == false ？ | 远亮的博客</title>
     <meta name="author" content="John Doe" />
     <meta name="keywords" content="" />
-    <meta name="description" content="在javaScript中，经常会看到 0 == false =&amp;gt; ture的情况，一个Number类型，怎么能等于一个Boolen类型呢？先从javaScript的基本类型说起javasript类型1. 类型分类传统意义上我们会说是7中基本类型，Number String Boolean undefined null Symbol Object。目前还在推进阶段的Bigint类型。除了这种分类之外，我们还可以有一个更详尽的分类方式：6中原始类型NumberString..." />
+    <meta name="description" content="在javaScript中，经常会看到 0 == false =&amp;gt; ture的情况，一个Number类型，怎么能等于一个Boolen类型呢？先从javaScript的基本类型说起javasript类型类型分类传统意义上我们会说是7中基本类型，Number String Boolean undefined null Symbol Object。目前还在推进阶段的Bigint类型。除了这种分类之外，我们还可以有一个更详尽的分类方式：6中原始类型NumberStringBoo..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -99,7 +99,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javasript类型"><span class="toc-number">1.</span> <span class="toc-text">javasript类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-类型分类"><span class="toc-number">1.1.</span> <span class="toc-text">1. 类型分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-类型判断"><span class="toc-number">1.2.</span> <span class="toc-text">2. 类型判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-类型转换"><span class="toc-number">1.3.</span> <span class="toc-text">3. 类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-unboxing-amp-boxing"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 unboxing &amp; boxing</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-1-boxing"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">3.1.1 boxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-unboxing"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">3.1.2 unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-3-toString-toLocaleSting的常见用法"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">3.1.3 toString toLocaleSting的常见用法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-String-to-Number"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 String to Number</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-Number-to-String"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 Number to String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 &#x3D;&#x3D;&#x3D;</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">2.</span> <span class="toc-text">参考文献</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javasript类型"><span class="toc-number">1.</span> <span class="toc-text">javasript类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类型分类"><span class="toc-number">1.1.</span> <span class="toc-text">类型分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型判断"><span class="toc-number">1.2.</span> <span class="toc-text">类型判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型转换"><span class="toc-number">1.3.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#unboxing-amp-boxing"><span class="toc-number">1.3.1.</span> <span class="toc-text">unboxing &amp; boxing</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#boxing"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">boxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#unboxing"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">unboxing</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#toString-toLocaleSting的常见用法"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">toString toLocaleSting的常见用法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-String-to-Number"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 String to Number</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Number-to-String"><span class="toc-number">1.3.3.</span> <span class="toc-text">Number to String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#"><span class="toc-number">1.3.4.</span> <span class="toc-text">&#x3D;&#x3D;&#x3D;</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">2.</span> <span class="toc-text">参考文献</span></a></li></ol>
         
     </div>
     
@@ -139,7 +139,7 @@
         
         <p>在javaScript中，经常会看到 <code>0 == false</code> =&gt; ture的情况，一个Number类型，怎么能等于一个Boolen类型呢？先从javaScript的基本类型说起</p>
 <a id="more"></a>
-<h2 id="javasript类型"><a href="#javasript类型" class="headerlink" title="javasript类型"></a>javasript类型</h2><h3 id="1-类型分类"><a href="#1-类型分类" class="headerlink" title="1. 类型分类"></a>1. 类型分类</h3><p>传统意义上我们会说是7中基本类型，Number String Boolean undefined null Symbol Object。</p>
+<h2 id="javasript类型"><a href="#javasript类型" class="headerlink" title="javasript类型"></a>javasript类型</h2><h3 id="类型分类"><a href="#类型分类" class="headerlink" title="类型分类"></a>类型分类</h3><p>传统意义上我们会说是7中基本类型，Number String Boolean undefined null Symbol Object。</p>
 <p>目前还在推进阶段的Bigint类型。除了这种分类之外，我们还可以有一个更详尽的分类方式：</p>
 <ul>
 <li>6中原始类型<ul>
@@ -163,7 +163,7 @@
 <li>null</li>
 <li>Function</li>
 </ul>
-<h3 id="2-类型判断"><a href="#2-类型判断" class="headerlink" title="2. 类型判断"></a>2. 类型判断</h3><p>如何判断当前变量的类型呢，将JS常用的几种方式，做一个归纳：</p>
+<h3 id="类型判断"><a href="#类型判断" class="headerlink" title="类型判断"></a>类型判断</h3><p>如何判断当前变量的类型呢，将JS常用的几种方式，做一个归纳：</p>
 <ul>
 <li><p>原始类型 用 <code>typeof</code></p>
 <ul>
@@ -206,7 +206,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3-类型转换"><a href="#3-类型转换" class="headerlink" title="3. 类型转换"></a>3. 类型转换</h3><table>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><table>
 <thead>
 <tr>
 <th>-</th>
@@ -290,7 +290,7 @@
 <td>-</td>
 </tr>
 </tbody></table>
-<h4 id="3-1-unboxing-amp-boxing"><a href="#3-1-unboxing-amp-boxing" class="headerlink" title="3.1 unboxing &amp; boxing"></a>3.1 unboxing &amp; boxing</h4><p>装箱和拆箱，是在java中提到的概念，在理解这个之前，要首先明白，在JS里类和类型是两个不同的概念。 这是一些动态语言的特性，比如javaScript、python。Javascript有7种基本类型，其中，<code>Number</code>、<code>String</code>、<code>Boolen</code>、<code>Symbol</code>又拥有各自的类。这里要特别注意区分类和类型的区别,虽然，<code>new String(&#39;hello&#39;).lenth == &#39;hello&#39;.length</code> ，但是他们的<code>typeof</code>并不相同：</p>
+<h4 id="unboxing-amp-boxing"><a href="#unboxing-amp-boxing" class="headerlink" title="unboxing &amp; boxing"></a>unboxing &amp; boxing</h4><p>装箱和拆箱，是在java中提到的概念，在理解这个之前，要首先明白，在JS里类和类型是两个不同的概念。 这是一些动态语言的特性，比如javaScript、python。Javascript有7种基本类型，其中，<code>Number</code>、<code>String</code>、<code>Boolen</code>、<code>Symbol</code>又拥有各自的类。这里要特别注意区分类和类型的区别,虽然，<code>new String(&#39;hello&#39;).lenth == &#39;hello&#39;.length</code> ，但是他们的<code>typeof</code>并不相同：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'hello'</span>)    <span class="comment">//object</span></span><br><span class="line">typefo <span class="string">'hello'</span>;              <span class="comment">//string</span></span><br><span class="line"></span><br><span class="line">!<span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">''</span>)  <span class="comment">//false</span></span><br><span class="line">!<span class="string">''</span>             <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
 <p>除了，new操作之外，<code>Number</code>、<code>String</code>、<code>Boolean</code>不带new操作还可以直接进行类型转换,得到的并不是object,而是转换后的类型本身</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>(<span class="string">'1'</span>)   =&gt; <span class="number">1</span></span><br><span class="line"><span class="built_in">String</span>(<span class="number">2222</span>)  =&gt; <span class="string">'22222'</span> <span class="comment">//这里返回的是string类型，而不是String对象</span></span><br><span class="line">Boolen(<span class="number">1</span>)     =&gt; <span class="literal">true</span></span><br><span class="line">Boolen(<span class="string">'0'</span>)   =&gt; <span class="literal">true</span></span><br><span class="line">Boolen(<span class="number">0</span>)     =&gt; <span class="literal">false</span></span><br><span class="line">Boolen(<span class="string">''</span>)    =&gt; <span class="literal">false</span></span><br></pre></td></tr></table></figure>
@@ -299,10 +299,10 @@
 <p>这里推荐大家不要用自动的类型转换，涉及到类型转换的地方，都显式地采用手动的类型转换，对可读性比较有帮助。</p>
 </blockquote>
 <p>这里有一个比较特殊的类型<code>Symbol</code>，是new不了的。</p>
-<h5 id="3-1-1-boxing"><a href="#3-1-1-boxing" class="headerlink" title="3.1.1 boxing"></a>3.1.1 boxing</h5><p>装箱就是一个操作的统称，指的是将一个基础类型转换为其对应的Object类型，除了上面提的<code>new</code>操作之外，也可以通过<code>Object(类型变量)</code>来实现装箱。<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱操作1</span></span><br><span class="line"><span class="built_in">Object</span>(<span class="string">'hello'</span>)</span><br><span class="line"><span class="comment">//装箱操作2 new</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'hello'</span>)  <span class="comment">//String obj</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="boxing"><a href="#boxing" class="headerlink" title="boxing"></a>boxing</h5><p>装箱就是一个操作的统称，指的是将一个基础类型转换为其对应的Object类型，除了上面提的<code>new</code>操作之外，也可以通过<code>Object(类型变量)</code>来实现装箱。<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱操作1</span></span><br><span class="line"><span class="built_in">Object</span>(<span class="string">'hello'</span>)</span><br><span class="line"><span class="comment">//装箱操作2 new</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'hello'</span>)  <span class="comment">//String obj</span></span><br></pre></td></tr></table></figure></p>
 <p>可以装箱操作的类型有: <code>Number</code>、<code>String</code>、<code>Boolean</code>、<code>Symbol</code>;其中<code>Symbol</code>无法采用new的方式，其他的三类两种方式均可。</p>
 <p>装箱操作一般是需要手动完成得，而在自动类型转换中，会经常遇到拆箱操作</p>
-<h5 id="3-1-2-unboxing"><a href="#3-1-2-unboxing" class="headerlink" title="3.1.2 unboxing"></a>3.1.2 unboxing</h5><p>拆箱操作是在将<code>Object</code>对象转换为其他基础类型时发生的操作。当进行拆箱操作时，将自动调用<code>[Symbol.toPrimitive]</code>，<code>ValueOf</code>，<code>toString</code>三者中的一个，调用的原则是：</p>
+<h5 id="unboxing"><a href="#unboxing" class="headerlink" title="unboxing"></a>unboxing</h5><p>拆箱操作是在将<code>Object</code>对象转换为其他基础类型时发生的操作。当进行拆箱操作时，将自动调用<code>[Symbol.toPrimitive]</code>，<code>ValueOf</code>，<code>toString</code>三者中的一个，调用的原则是：</p>
 <ol>
 <li>存在 <code>[Symbol.toPrimitive]</code>时，按照<code>[Symbol.toPrimitive]</code>函数进行转换</li>
 <li>没有<code>[Symbol.toPrimitive]</code>的顺序是<br> 1.<code>ValueOf()</code><br> 2.<code>toString()</code></li>
@@ -313,7 +313,7 @@
 
 </li>
 </ol>
-<h5 id="3-1-3-toString-toLocaleSting的常见用法"><a href="#3-1-3-toString-toLocaleSting的常见用法" class="headerlink" title="3.1.3 toString toLocaleSting的常见用法"></a>3.1.3 toString toLocaleSting的常见用法</h5><p>在object对象中已经内置了toSting 和 toLocalString方法，但是你可以重写他们。</p>
+<h5 id="toString-toLocaleSting的常见用法"><a href="#toString-toLocaleSting的常见用法" class="headerlink" title="toString toLocaleSting的常见用法"></a>toString toLocaleSting的常见用法</h5><p>在object对象中已经内置了toSting 和 toLocalString方法，但是你可以重写他们。</p>
 <ul>
 <li><p>toString()</p>
 <p>  每个对象都有一个 toString() 方法，当该对象被表示为一个文本值时，或者一个对象以预期的字符串方式引用时自动调用。默认情况下，toString() 方法被每个 Object 对象继承。如果此方法在自定义对象中未被覆盖，toString() 返回 “[object type]”，其中 type 是对象的类型。以下代码说明了这一点：</p>
@@ -378,7 +378,7 @@
 <li>Number</li>
 <li>字面量1231<br>这些api的使用方式和最终结果，有或多或少的不同。</li>
 </ul>
-<h4 id="3-3-Number-to-String"><a href="#3-3-Number-to-String" class="headerlink" title="3.3 Number to String"></a>3.3 Number to String</h4><h4 id="3-4"><a href="#3-4" class="headerlink" title="3.4 ==="></a>3.4 ===</h4><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive" target="_blank" rel="noopener">Symbol.toPrimitive</a></p>
+<h4 id="Number-to-String"><a href="#Number-to-String" class="headerlink" title="Number to String"></a>Number to String</h4><h4 id=""><a href="#" class="headerlink" title="==="></a>===</h4><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive" target="_blank" rel="noopener">Symbol.toPrimitive</a></p>
 
         
     </section>
