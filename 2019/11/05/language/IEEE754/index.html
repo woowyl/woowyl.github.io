@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>0.1+0.2≠0.3的问题 | 远亮的博客</title>
+    <meta name="author" content="John Doe" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="这个问题应该是在浮点数运算里比较常见的问题了，这次就送三个方面来分析一下这个问题：解决方案为什么会有这个问题一个表示浮点数的工具1. 常用解决方案将浮点数扩大$10^n$变成整数，进行整数运算if判断操作时使用Number.EPSILON可表示(representable)数之间的最小间隔120.1 + 0.2 == 0.3  //false0.1 + 0.2 - 0.3 &amp;lt; Number.EPSILON2.为什么会有这个问题ECMAScript7种常见类..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">远亮的博客</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/language">
+                <span class="nav-text">通识</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://wangyuanliang.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-常用解决方案"><span class="toc-number">1.</span> <span class="toc-text">1. 常用解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-为什么会有这个问题"><span class="toc-number">2.</span> <span class="toc-text">2.为什么会有这个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-IEEE754"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 IEEE754</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-转换步骤"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 转换步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-js里的最大整数和浮点数"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 js里的最大整数和浮点数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-js里常见的数据表示法"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 js里常见的数据表示法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-补码的方式"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 补码的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-原码转换补码"><span class="toc-number">2.5.1.</span> <span class="toc-text">2.5.1 原码转换补码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-补码转为原码"><span class="toc-number">2.5.2.</span> <span class="toc-text">2.5.2 补码转为原码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-3-补码的意义"><span class="toc-number">2.5.3.</span> <span class="toc-text">2.5.3 补码的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-4-阶码"><span class="toc-number">2.5.4.</span> <span class="toc-text">2.5.4 阶码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-一个表示浮点数的工具"><span class="toc-number">3.</span> <span class="toc-text">3 一个表示浮点数的工具</span></a></li></ol>
+        
+    </div>
+    
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            0.1+0.2≠0.3的问题
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://wangyuanliang.com/2019/11/05/language/IEEE754/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-11-05T06:00:05.000Z" itemprop="datePublished">2019-11-05</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/" rel="tag">计算机通识</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>这个问题应该是在浮点数运算里比较常见的问题了，</p>
+<a id="more"></a>
+<p>这次就送三个方面来分析一下这个问题：</p>
+<ul>
+<li>解决方案</li>
+<li>为什么会有这个问题</li>
+<li>一个表示浮点数的工具</li>
+</ul>
+<h2 id="1-常用解决方案"><a href="#1-常用解决方案" class="headerlink" title="1. 常用解决方案"></a>1. 常用解决方案</h2><ul>
+<li>将浮点数扩大$10^n$变成整数，进行整数运算</li>
+<li>if判断操作时使用<code>Number.EPSILON</code>可表示(representable)数之间的最小间隔<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> == <span class="number">0.3</span>  <span class="comment">//false</span></span><br><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> - <span class="number">0.3</span> &lt; <span class="built_in">Number</span>.EPSILON</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-为什么会有这个问题"><a href="#2-为什么会有这个问题" class="headerlink" title="2.为什么会有这个问题"></a>2.为什么会有这个问题</h2><p>ECMAScript7种常见类型中，Number应该是最令人关注的数据类型了，这种类型使用IEEE754格式来表示整数和浮点数。所以浮点数计算会产生舍入误差的问题，是IEEE754数值的浮点问题，不仅仅存在于javaScript中，也存在于任何一个使用IEEE754标准的语言中。<br>由于计算机存储和计算都是基于二进制，但是我们平时日常使用和编程使用的大都是十进制表示。所以这就存在一个二进制转十进制的问题。0.1+0.2≠0.3的问题就是来源于此。<br>具体来说，在二进制表示十进制整数时并没有什么问题，但是在表示浮点数时，便会出现精度问题。<br>javaScript采用IEEE754标准的双精度64位二进制的形式(单精度采用1+8+23位的二进制表示)。</p>
+<h3 id="2-1-IEEE754"><a href="#2-1-IEEE754" class="headerlink" title="2.1 IEEE754"></a>2.1 IEEE754</h3><p>基于 IEEE 754 标准的双精度 64 位二进制格式的值（-($2^{63}$ -1) 到 $2^{63}$ -1）。它并没有为整数给出一种特定的类型。除了能够表示浮点数外，还有一些带符号的值：+Infinity，-Infinity 和 NaN (非数值，Not-a-Number)。<br><img src="evernotecid://84FC037D-AE68-4F05-8F7D-A0E8EE6858BD/appyinxiangcom/4074438/ENResource/p596" alt="5e108fa71c8bb159294b8a7e2187518c.png"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>S</th>
+<th>Exp</th>
+<th>Fraction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>长度</td>
+<td>1</td>
+<td>11</td>
+<td>52位长</td>
+</tr>
+<tr>
+<td>位数</td>
+<td>63</td>
+<td>62至52</td>
+<td>偏正值（实际的指数大小+1023）    51至0位编号（从右边开始为0）</td>
+</tr>
+<tr>
+<td>$1.fraction^{exponent}$</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 第0位记录符号位</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 1 负数</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 0 正数</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 第1-11位记录指数偏移值(exponent)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- 为了兼容正负数，采用移码中的阶码的方式表示(详见2.5.4)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>第12-63位存储有效位（fraction）</li>
+</ul>
+<h3 id="2-2-转换步骤"><a href="#2-2-转换步骤" class="headerlink" title="2.2 转换步骤"></a>2.2 转换步骤</h3><ol>
+<li>将十进制转为二进制表示（误差来自于这个步骤）</li>
+<li>将二进制转换为指数科学计数法 </li>
+<li>将科学计数法采用IEEE754的方式存储于计算机</li>
+</ol>
+<p>举例来说,为了方便说明，我们这里选择 77.1875其小数部分是可以用有限位表示的</p>
+<ol>
+<li><p>将十进制转换为二进制<br>77 =&gt; 1001101<br>0.1875 =&gt; 0.0011<br>77.1875 =&gt; 1001101.0011</p>
+</li>
+<li><p>将二进制转化为指数科学计数法<br>1001101.0011 =&gt; 1.0011010011*$2^6$</p>
+</li>
+<li><p>将科学计数法采用IEEE754的方式存储于计算机</p>
+<ol>
+<li>符号位： + =&gt; 0</li>
+<li>指数偏移量 =&gt; 6+2047 =&gt; 110</li>
+<li>有效位：0011010011</li>
+<li>变为64位表示<code>0 00000000110 0000000000 0000000000 0000000000 0000000000 0000110100 11</code></li>
+</ol>
+</li>
+</ol>
+<p>在日常开发中，将小数部分转化为二进制，常常无法在有限位内转化，所以52位有效位的情况下，从小数点后第一个非0数字开始，之后最多可以保留52位（加上最左边被舍去的1，应该是53位）。</p>
+<h3 id="2-3-js里的最大整数和浮点数"><a href="#2-3-js里的最大整数和浮点数" class="headerlink" title="2.3 js里的最大整数和浮点数"></a>2.3 js里的最大整数和浮点数</h3><ul>
+<li>Number.MAX_SAFE_INTEGER<ul>
+<li>JavaScript 中最大的安全整数 ($2^{53}$ - 1)。</li>
+<li>52位二进制表示的最大数就是$2^{53}$ - 1</li>
+</ul>
+</li>
+<li>Number.MAX_VALUE<ul>
+<li>能表示的最大正数。最小的负数是 -MAX_VALUE。</li>
+</ul>
+</li>
+<li>Number.MIN_SAFE_INTEGER<ul>
+<li>JavaScript 中最小的安全整数 (-($2^{53}$ - 1)).</li>
+</ul>
+</li>
+<li>Number.MIN_VALUE<ul>
+<li>能表示的最小正数即最接近 0 的正数 (实际上不会变成 0)。最大的负数是 -MIN_VALUE。</li>
+<li>二进制表示为 0.0000000000000……00001</li>
+<li>根据IEEE754标准，小数点后最多可以出现$2^{11}$</li>
+</ul>
+</li>
+</ul>
+<p>要检查值是否大于或小于 +/-Infinity，你可以使用常量 Number.MAX_VALUE 和 Number.MIN_VALUE。另外在 ECMAScript 6 中，你也可以通过 Number.isSafeInteger() 方法还有 Number.MAX_SAFE_INTEGER 和 Number.MIN_SAFE_INTEGER($2^{53}$-1) 来检查值是否在双精度浮点数的取值范围内。 超出这个范围，JavaScript 中的数字不再安全了，也就是只有 second mathematical interger 可以在 JavaScript 数字类型中正确表现。</p>
+<h3 id="2-4-js里常见的数据表示法"><a href="#2-4-js里常见的数据表示法" class="headerlink" title="2.4 js里常见的数据表示法"></a>2.4 js里常见的数据表示法</h3><ul>
+<li>二进制   <ul>
+<li>以0b开头</li>
+<li>0b101  (十进制的5)</li>
+</ul>
+</li>
+<li>八进制<ul>
+<li>以0o开头</li>
+<li>0o101 (十进制的65)</li>
+</ul>
+</li>
+<li>十进制<ul>
+<li>日常编码最常用的进制</li>
+</ul>
+</li>
+<li>十六进制<ul>
+<li>以0x开头</li>
+<li>0x101 (十进制257)</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-5-补码的方式"><a href="#2-5-补码的方式" class="headerlink" title="2.5 补码的方式"></a>2.5 补码的方式</h3><p><img src="evernotecid://84FC037D-AE68-4F05-8F7D-A0E8EE6858BD/appyinxiangcom/4074438/ENResource/p597" alt="521ab6715750440309c4ac2b9b15ec1f.png"></p>
+<p>负数补码表示的范围比原码稍宽，多一种数码组合。对于定点数，若为纯小数，表示范围为：<br>-1 ~ $1-2^n$。若为纯整数，表示范围为：$-2^n$ ~ $2^n-1$（原码：$-2^n+1$ ~ $2^n-1$）</p>
+<h4 id="2-5-1-原码转换补码"><a href="#2-5-1-原码转换补码" class="headerlink" title="2.5.1 原码转换补码"></a>2.5.1 原码转换补码</h4><p>(以8位二进制为例)</p>
+<ul>
+<li>正整数的补码是其二进制表示，与原码相同 <ul>
+<li>9 =&gt; <code>0000 1001</code></li>
+</ul>
+</li>
+<li>负整数的补码，将其原码除符号位外的所有位取反（0变1，1变0，符号位为1不变）后加1<ul>
+<li>原码 -9 =&gt;<code>1000 1001</code></li>
+<li>取反 <code>1000 1001</code> =&gt; <code>1111 0110</code></li>
+<li>加一 <code>1111 0110</code> =&gt; <code>1111 0111</code></li>
+</ul>
+</li>
+<li>数0的补码表示是唯一的 <ul>
+<li>原码会有<code>+0</code>、<code>-0</code>的问题</li>
+<li><code>0000 0000</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-5-2-补码转为原码"><a href="#2-5-2-补码转为原码" class="headerlink" title="2.5.2 补码转为原码"></a>2.5.2 补码转为原码</h4><ul>
+<li>如果补码的符号位为“0”，表示是一个正数，其原码就是补码。</li>
+<li>如果补码的符号位为“1”，表示是一个负数，求这个补码的补码就是原码。<ul>
+<li>取反 <code>1111 0111</code> =&gt; <code>1000 1000</code></li>
+<li>加一 <code>1000 1000</code> =&gt; <code>1000 1001</code></li>
+<li>原码 <code>1000 1001</code> =&gt; <code>-9</code></li>
+</ul>
+</li>
+<li>0是唯一的 <code>0000 0000</code><ul>
+<li>原码的-0 =&gt; <code>1000 0000</code>表示的是什么？来看一下</li>
+</ul>
+<ol>
+<li>取反 <code>1000 0000</code> =&gt; <code>1111 1111</code></li>
+<li>加一 <code>1111 1111</code> =&gt; <code>1000 0000</code></li>
+<li>原码 <code>1000 0000</code> =&gt; <code>-128</code> (符号位也代表了数值)</li>
+</ol>
+</li>
+</ul>
+<h4 id="2-5-3-补码的意义"><a href="#2-5-3-补码的意义" class="headerlink" title="2.5.3 补码的意义"></a>2.5.3 补码的意义</h4><ul>
+<li>解决了符号的表示的问题；</li>
+<li>可以将减法运算转化为补码的加法运算来实现，克服了原码加减法运算繁杂的弊端，可有效简化运算器的设计；<br>  这里需要展开一下，以八位二进制来说，<ul>
+<li>6 和 6 + 128 ($2^8$)的表示是一样的 <code>0000 0110</code></li>
+<li>利用上述的特点就可以将减法操作变为加法操作</li>
+<li>9-3 =&gt; 9-3+128 =&gt; 9+125</li>
+<li>所以将-3转化为125可以简化运算</li>
+<li>这个转化关系就是补码 取反加一</li>
+</ul>
+</li>
+<li>在计算机中，利用电子器件的特点实现补码和真值、原码之间的相互转换，非常容易；</li>
+<li>补码表示统一了符号位和数值位，使得符号位可以和数值位一起直接参与运算，这也为后面设计乘法器除法器等运算器件提供了极大的方便。</li>
+</ul>
+<p>总之，补码概念的引入和当时运算器设计的背景不无关系，从设计者角度，既要考虑表示的数的类型(小数、整数、实数和复数)、数值范围和精确度，又要考虑数据存储和处理所需要的硬件代价。因此，使用补码来表示机器数并得到广泛的应用，也就不难理解了</p>
+<h4 id="2-5-4-阶码"><a href="#2-5-4-阶码" class="headerlink" title="2.5.4 阶码"></a>2.5.4 阶码</h4><p>在IEEE274中，指数部分采用的移码方式是阶码，而不是传统的补码，阶码的规则更加简单，就是用 $2^{n-1}-1$ + 实际值就是最终的结果。<br>比如，一个8位的二进制($2^{n-1}-1$ = 127)，表示的数是 39</p>
+<p>实际转码就是 127+39 = 166；</p>
+<p>表示的数是 -56；<br>实际转码就是 127-56 = 71；</p>
+<h2 id="3-一个表示浮点数的工具"><a href="#3-一个表示浮点数的工具" class="headerlink" title="3 一个表示浮点数的工具"></a>3 一个表示浮点数的工具</h2><p>如代码无法运行请点击<a href="https://codepen.io/woowyl/pen/JjbpKzy" target="_blank" rel="noopener">这里</a></p>
+<iframe src="https://codepen.io/woowyl/pen/JjbpKzy?height=807&theme-id=dark&default-tab=js,result" width="100%" height="400" frameborder="0" loading="lazy" allowfullscreen></iframe>
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2019/10/23/font-end/2019/js_type/" class="article-next" title="0 == false ？"><i class="icon-arrow-right"></i></a>
+
+
+<a id="pageprev" href="/2020/04/16/daily/2020-04-16-bit/" class="article-prev" title="火币平台比特币交易"><i class="icon-arrow-left"></i></a>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "0da1f66fc44b769a7531",
+        clientSecret: "567ec8a984c0f8fdcfd505b556e0ef16d99eab19",
+        repo: "woowyl.github.io",
+        owner: "woowyl",
+        admin: ["woowyl"],
+        id: "2019/11/05/language/IEEE754",
+        distractionFreeMode: true,
+        title: "0.1+0.2≠0.3的问题",
+        body: "http://wangyuanliang.com/2019/11/05/language/IEEE754/",
+        labels: ["计算机通识"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?948c1e123cc90fe559dca9cb0d07bbab";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+</html>
