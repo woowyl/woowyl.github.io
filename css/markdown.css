@@ -391,14 +391,13 @@
   color: #333;
 }
 .markdown-body h4 {
-  font-size: 0.8em;
   color: #333;
 }
 .markdown-body h5 {
-  font-size: 0.6em;
+  font-size: 0.8em;
 }
 .markdown-body h6 {
-  font-size: 0.6em;
+  font-size: 0.8em;
   color: #6a737d;
 }
 .markdown-body ul,

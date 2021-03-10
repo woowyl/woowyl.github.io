@@ -152,7 +152,7 @@
 </li>
 </ul>
 <h2 id="为什么会有这个问题"><a href="#为什么会有这个问题" class="headerlink" title="为什么会有这个问题"></a>为什么会有这个问题</h2><p>ECMAScript7种常见类型中，Number应该是最令人关注的数据类型了，这种类型使用IEEE754格式来表示整数和浮点数。所以浮点数计算会产生舍入误差的问题，是IEEE754数值的浮点问题，不仅仅存在于javaScript中，也存在于任何一个使用IEEE754标准的语言中。<br>由于计算机存储和计算都是基于二进制，但是我们平时日常使用和编程使用的大都是十进制表示。所以这就存在一个二进制转十进制的问题。0.1+0.2≠0.3的问题就是来源于此。<br>具体来说，在二进制表示十进制整数时并没有什么问题，但是在表示浮点数时，便会出现精度问题。<br>javaScript采用IEEE754标准的双精度64位二进制的形式(单精度采用1+8+23位的二进制表示)。</p>
-<h3 id="IEEE754"><a href="#IEEE754" class="headerlink" title="IEEE754"></a>IEEE754</h3><p>基于 IEEE 754 标准的双精度 64 位二进制格式的值（-($2^{63}$ -1) 到 $2^{63}$ -1）。它并没有为整数给出一种特定的类型。除了能够表示浮点数外，还有一些带符号的值：+Infinity，-Infinity 和 NaN (非数值，Not-a-Number)。<br><img src="evernotecid://84FC037D-AE68-4F05-8F7D-A0E8EE6858BD/appyinxiangcom/4074438/ENResource/p596" alt="5e108fa71c8bb159294b8a7e2187518c.png"></p>
+<h3 id="IEEE754"><a href="#IEEE754" class="headerlink" title="IEEE754"></a>IEEE754</h3><p>基于 IEEE 754 标准的双精度 64 位二进制格式的值（-($2^{63}$ -1) 到 $2^{63}$ -1）。它并没有为整数给出一种特定的类型。除了能够表示浮点数外，还有一些带符号的值：+Infinity，-Infinity 和 NaN (非数值，Not-a-Number)。<br><img src="safeInteger.png" alt=""></p>
 <table>
 <thead>
 <tr>
@@ -174,45 +174,22 @@
 <td>62至52</td>
 <td>偏正值（实际的指数大小+1023）    51至0位编号（从右边开始为0）</td>
 </tr>
-<tr>
-<td>$1.fraction^{exponent}$</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>- 第0位记录符号位</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>- 1 负数</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>- 0 正数</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>- 第1-11位记录指数偏移值(exponent)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>- 为了兼容正负数，采用移码中的阶码的方式表示(详见2.5.4)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
+<p> $1.fraction^{exponent}$</p>
 <ul>
-<li>第12-63位存储有效位（fraction）</li>
+<li><p>第0位记录符号位 </p>
+<ul>
+<li>1 负数</li>
+<li>0 正数</li>
+</ul>
+</li>
+<li><p>第1-11位记录指数偏移值(exponent)</p>
+<ul>
+<li>为了兼容正负数，采用移码中的阶码的方式表示(详见2.5.4)</li>
+</ul>
+</li>
+<li><p>第12-63位存储有效位（fraction）</p>
+</li>
 </ul>
 <h3 id="转换步骤"><a href="#转换步骤" class="headerlink" title="转换步骤"></a>转换步骤</h3><ol>
 <li>将十进制转为二进制表示（误差来自于这个步骤）</li>
@@ -278,7 +255,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="补码的方式"><a href="#补码的方式" class="headerlink" title="补码的方式"></a>补码的方式</h3><p><img src="evernotecid://84FC037D-AE68-4F05-8F7D-A0E8EE6858BD/appyinxiangcom/4074438/ENResource/p597" alt="521ab6715750440309c4ac2b9b15ec1f.png"></p>
+<h3 id="补码的方式"><a href="#补码的方式" class="headerlink" title="补码的方式"></a>补码的方式</h3><p><img src="jiema.png" alt=""></p>
 <p>负数补码表示的范围比原码稍宽，多一种数码组合。对于定点数，若为纯小数，表示范围为：<br>-1 ~ $1-2^n$。若为纯整数，表示范围为：$-2^n$ ~ $2^n-1$（原码：$-2^n+1$ ~ $2^n-1$）</p>
 <h4 id="原码转换补码"><a href="#原码转换补码" class="headerlink" title="原码转换补码"></a>原码转换补码</h4><p>(以8位二进制为例)</p>
 <ul>
